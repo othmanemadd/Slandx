@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>slandx store | Streaming Services Subscriptions</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0f0c29;
+      --secondary: #302b63;
+      --accent: #8f5cff;
+      --blue: #3a8dde;
+      --gradient: linear-gradient(135deg, #181634 0%, #21204b 40%, #3a8dde 75%, #8f5cff 100%);
+      --shadow: 0 4px 24px 0 rgba(56,56,102,0.12);
+    }
+    body {
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      background: var(--gradient);
+      color: #fff;
+      min-height: 100vh;
+      position: relative;
+    }
+    header {
+      text-align: center;
+      padding: 2.2rem 0 1.2rem 0;
+      background: rgba(17,16,41,0.97);
+      box-shadow: var(--shadow);
+    }
+    header h1 {
+      font-size: 2.6rem;
+      letter-spacing: 2px;
+      background: linear-gradient(92deg, var(--blue), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 0 0 0.6rem 0;
+      font-weight: 700;
+    }
+    header p {
+      font-size: 1.2rem;
+      margin: 0;
+      color: #dad7fc;
+      letter-spacing: 0.03em;
+      font-weight: 400;
+    }
+    .hero-section {
+      text-align: center;
+      padding: 1.5rem 1.2rem 2.2rem 1.2rem;
+      background: rgba(34,31,65,0.93);
+      box-shadow: var(--shadow);
+      border-radius: 1.3rem;
+      margin: 2.5rem auto 1.5rem auto;
+      max-width: 910px;
+    }
+    .hero-section h2 {
+      font-size: 2rem;
+      margin-bottom: 0.8rem;
+      font-weight: 700;
+      color: var(--blue);
+    }
+    .hero-section p {
+      max-width: 620px;
+      margin: 0 auto;
+      color: #ccbffa;
+      font-size: 1.14rem;
+    }
+    .products-section {
+      max-width: 1220px;
+      margin: 2rem auto 3rem auto;
+      padding: 0 1rem;
+    }
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2.1rem;
+    }
+    .product-card {
+      background: rgba(44,42,81,0.98);
+      border-radius: 1.5rem;
+      box-shadow: 0 4px 44px 0 rgba(78,74,148,0.13);
+      padding: 1.5rem 1.2rem 1.5rem 1.2rem;
+      text-align: center;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: box-shadow 0.24s, transform 0.21s;
+    }
+    .product-card:hover {
+      box-shadow: 0 10px 32px 0 rgba(143,92,255,0.22);
+      transform: translateY(-7px) scale(1.015);
+    }
+    .product-logo-wrapper {
+      width: 92px;
+      height: 92px;
+      background: radial-gradient(ellipse at center, #26295b 60%, #3a8dde22 100%);
+      margin-bottom: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 1.1rem;
+      overflow: hidden;
+      box-shadow: 0 2px 16px 0 rgba(74,51,158,0.14);
+    }
+    .product-logo-wrapper img {
+      width: 85px;
+      height: 85px;
+      object-fit: contain;
+      display: block;
+    }
+    .product-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+      color: var(--accent);
+      letter-spacing: 0.03em;
+    }
+    .product-desc {
+      font-size: 1rem;
+      color: #cdc9f6;
+      margin-bottom: 1.2rem;
+      min-height: 50px;
+      font-weight: 400;
+    }
+    .product-price {
+      background: linear-gradient(90deg, var(--blue), var(--accent));
+      color: #fff;
+      padding: 0.44rem 0.95rem;
+      font-size: 1.07rem;
+      font-weight: 600;
+      border-radius: 1.2rem;
+      margin-bottom: 1.2rem;
+      display: inline-block;
+      box-shadow: 0 2px 6px 0 rgba(143,92,255,0.13);
+      letter-spacing: 0.03em;
+    }
+    .buy-btn {
+      background: linear-gradient(90deg, var(--blue) 0%, var(--accent) 100%);
+      color: #fff;
+      border: none;
+      border-radius: 2rem;
+      padding: 0.8rem 2.1rem;
+      font-size: 1.02rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 2px 18px 0 rgba(143,92,255,0.17);
+      transition: background 0.21s, transform 0.21s;
+      outline: none;
+      margin-top: auto;
+      margin-bottom: 0.2rem;
+      letter-spacing: 1px;
+    }
+    .buy-btn:hover, .buy-btn:focus {
+      background: linear-gradient(90deg, var(--accent) 0%, var(--blue) 100%);
+      transform: scale(1.04);
+    }
+    .telegram-section {
+      background: rgba(44,42,78,0.98);
+      margin: 2.7rem auto 0 auto;
+      border-radius: 1.2rem;
+      max-width: 600px;
+      box-shadow: var(--shadow);
+      padding: 2rem 1.5rem;
+      text-align: center;
+      position: relative;
+    }
+    .telegram-section h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+      color: var(--blue);
+      font-weight: 700;
+    }
+    .telegram-section p {
+      color: #bab5fa;
+      margin-bottom: 1.2rem;
+      font-size: 1rem;
+    }
+    .telegram-link {
+      display: inline-block;
+      background: linear-gradient(90deg, var(--blue), var(--accent));
+      color: #fff;
+      font-weight: 700;
+      border-radius: 2rem;
+      padding: 0.8rem 2.2rem;
+      font-size: 1.06rem;
+      text-decoration: none;
+      box-shadow: 0 2px 14px 0 rgba(143,92,255,0.14);
+      transition: background 0.21s, transform 0.21s;
+      margin-top: 0.2rem;
+    }
+    .telegram-link:hover, .telegram-link:focus {
+      background: linear-gradient(90deg, var(--accent), var(--blue));
+      transform: scale(1.048);
+    }
+    .telegram-link i {
+      margin-right: 0.7rem;
+    }
+    footer {
+      text-align: center;
+      color: #bab5fa;
+      padding: 1.5rem 0 1.2rem 0;
+      font-size: 1rem;
+      background: rgba(17,16,41,0.97);
+      margin-top: 2rem;
+    }
+    @media (max-width: 700px) {
+      .hero-section {
+        margin: 1.3rem 0.3rem 1.3rem 0.3rem;
+        padding: 1.1rem 0.55rem 1.3rem 0.55rem;
+      }
+      .products-section {
+        padding: 0 0.4rem;
+      }
+      .telegram-section {
+        padding: 1.1rem 0.4rem;
+      }
+      .product-logo-wrapper {
+        width: 70px; height: 70px;
+      }
+      .product-logo-wrapper img {
+        width: 62px;
+        height: 62px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>slandx store</h1>
+    <p>Your gateway to premium streaming subscriptions</p>
+  </header>
+  <section class="hero-section">
+    <h2>All Your Favorite Streaming Services, One Store</h2>
+    <p>
+      Discover and subscribe to the world's best streaming platforms for 12 months. Movies, TV, sports, education, and more. Buy securely and instantly via Telegram!
+    </p>
+  </section>
+  <section class="products-section">
+    <div class="products-grid">
+
+      <!-- Netflix -->
+      <div class="product-card">
+        <div class="product-logo-wrapper">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" 
+               alt="Netflix logo"
+               onerror="this.style.display='none';this.parentNode.style.background='#e50914';">
+        </div>
+        <div class="product-title">Netflix (new)</div>
+        <div class="product-desc">
+          Unlimited movies, TV shows, and originals. Watch anytime, anywhere, ad-free.
+        </div>
+        <div class="product-price">12 Months • Contact for price</div>
+        <a href="https://t.me/GustSlAnD" target="_blank" rel="noopener">
+          <button class="buy-btn">Buy Now</button>
+        </a>
+      </div>
+
+      <!-- TOD TV -->
+      <div class="product-card">
+        <div class="product-logo-wrapper">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/TOD_logo.svg/1200px-TOD_logo.svg.png" 
+               alt="TOD TV logo"
+               onerror="this.style.display='none';this.parentNode.style.background='#000000';">
+        </div>
+        <div class="product-title">TOD TV</div>
+        <div class="product-desc">
+          Premium sports and entertainment content from the Middle East.
+        </div>
+        <div class="product-price">12 Months • Contact for price</div>
+        <a href="https://t.me/GustSlAnD" target="_blank" rel="noopener">
+          <button class="buy-btn">Buy Now</button>
+        </a>
+      </div>
+
+      <!-- Mubi -->
+      <div class="product-card">
+        <div class="product-logo-wrapper">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/MUBI_logo.svg/1200px-MUBI_logo.svg.png" 
+               alt="Mubi logo"
+               onerror="this.style.display='none';this.parentNode.style.background='#000000';">
+        </div>
+        <div class="product-title">Mubi</div>
+        <div class="product-desc">
+          Curated selection of classic and independent films from around the world.
+        </div>
+        <div class="product-price">12 Months • Contact for price</div>
+        <a href="https://t.me/GustSlAnD" target="_blank" rel="noopener">
+          <button class="buy-btn">Buy Now</button>
+        </a>
+      </div>
+
+      <!-- Stremium TV -->
+      <div class="product-card">
+        <div class="product-logo-wrapper">
+          <img src="https://www.stremium.com/images/stremium-logo.png" 
+               alt="Stremium TV logo"
+               onerror="this.style.display='none';this.parentNode.style.background='#00a8ff';">
+        </div>
+        <div class="product-title">Stremium TV</div>
+        <div class="product-desc">
+          Combine your streaming services into one seamless viewing experience.
+        </div>
+        <div class="product-price">12 Months • Contact for price</div>
+        <a href="https://t.me/GustSlAnD" target="_blank" rel="noopener">
+          <button class="buy-btn">Buy Now</button>
+        </a>
+      </div>
+
+      <!-- Curiosity Stream -->
+      <div class="product-card">
+        <div class="product-logo-wrapper">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/CuriosityStream_logo.svg/1200px-CuriosityStream_logo.svg.png" 
+               alt="Curiosity Stream logo"
+               onerror="this.style.display='none';this.parentNode.style.background='#000000';">
+        </div>
+        <div class="product-title">Curiosity Stream</div>
+        <div class="product-desc">
+          Documentaries and nonfiction series about science, history, and technology.
+        </div>
+        <div class="product-price">12 Months • Contact for price</div>
+        <a href="https://t.me/GustSlAnD" target="_blank" rel="noopener">
+          <button class="buy-btn">Buy Now</button>
+        </a>
+      </div>
+
+      <!-- Starz -->
+      <div class="product-card">
+        <div class="product-logo-wrapper">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Starz_Logo.svg/1200px-Starz_Logo.svg.png" 
+               alt="Starz logo"
+               onerror="this.style.display='none';this.parentNode.style.background='#000000';">
+        </div>
+        <div class="product-title">Starz</div>
+        <div class="product-desc">
+          Hollywood blockbusters, original series, and premium entertainment.
+        </div>
+        <div class="product-price">12 Months • Contact for price</div>
+        <a href="https://t.me/GustSlAnD" target="_blank" rel="noopener">
+          <button class="buy-btn">Buy Now</button>
+        </a>
+      </div>
+
+      <!-- Motion Array -->
+      <div class="product-card">
+        <div class="product-logo-wrapper">
+          <img src="https://motionarray.com/img/motion-array-logo.svg" 
+               alt="Motion Array logo"
+               onerror="this.style.display='none';this.parentNode.style.background='#000000';">
+        </div>
+        <div class="product-title">Motion Array</div>
+        <div class="product-desc">
+          Premium stock footage, templates, and assets for video creators.
+        </div>
+        <div class="product-price">12 Months • Contact for price</div>
+        <a href="https://t.me/GustSlAnD" target="_blank" rel="noopener">
+          <button class="buy-btn">Buy Now</button>
+        </a>
+      </div>
+
+      <!-- Pure Flix -->
+      <div class="product-card">
+        <div class="product-logo-wrapper">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Pure_Flix_logo.svg/1200px-Pure_Flix_logo.svg.png" 
+               alt="Pure Flix logo"
+               onerror="this.style.display='none';this.parentNode.style.background='#dc143c';">
+        </div>
+        <div class="product-title">Pure Flix</div>
+        <div class="product-desc">
+          Faith and family-focused films and shows for wholesome entertainment.
+        </div>
+        <div class="product-price">12 Months • Contact for price</div>
+        <a href="https://t.me/GustSlAnD" target="_blank" rel="noopener">
+          <button class="buy-btn">Buy Now</button>
+        </a>
+      </div>
+
+      <!-- Philo -->
+      <div class="product-card">
+        <div class="product-logo-wrapper">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Philo_logo.svg/1200px-Philo_logo.svg.png" 
+               alt="Philo logo"
+               onerror="this.style.display='none';this.parentNode.style.background='#00aff0';">
+        </div>
+        <div class="product-title">Philo</div>
+        <div class="product-desc">
+          Affordable live TV streaming with entertainment and lifestyle channels.
+        </div>
+        <div class="product-price">12 Months • Contact for price</div>
+        <a href="https://t.me/GustSlAnD" target="_blank" rel="noopener">
+          <button class="buy-btn">Buy Now</button>
+        </a>
+      </div>
+
+      <!-- MasterClass -->
+      <div class="product-card">
+        <div class="product-logo-wrapper">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/MasterClass_logo.svg/1200px-MasterClass_logo.svg.png" 
+               alt="MasterClass logo"
+               onerror="this.style.display='none';this.parentNode.style.background='#000000';">
+        </div>
+        <div class="product-title">MasterClass</div>
+        <div class="product-desc">
+          Learn from the world's best in various fields with celebrity-led classes.
+        </div>
+        <div class="product-price">12 Months • Contact for price</div>
+        <a href="https://t.me/GustSlAnD" target="_blank" rel="noopener">
+          <button class="buy-btn">Buy Now</button>
+        </a>
+      </div>
+
+      <!-- Disney+ -->
+      <div class="product-card">
+        <div class="product-logo-wrapper">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Disney%2B_logo.svg/1200px-Disney%2B_logo.svg.png" 
+               alt="Disney+ logo"
+               onerror="this.style.display='none';this.parentNode.style.background='#113cc7';">
+        </div>
+        <div class="product-title">Disney+</div>
+        <div class="product-desc">
+          Disney, Marvel, Pixar, Star Wars & National Geographic in one place.
+        </div>
+        <div class="product-price">12 Months • Contact for price</div>
+        <a href="https://t.me/GustSlAnD" target="_blank" rel="noopener">
+          <button class="buy-btn">Buy Now</button>
+        </a>
+      </div>
+
+      <!-- Sling TV -->
+      <div class="product-card">
+        <div class="product-logo-wrapper">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Sling_TV_logo.svg/1200px-Sling_TV_logo.svg.png" 
+               alt="Sling TV logo"
+               onerror="this.style.display='none';this.parentNode.style.background='#0cb5f2';">
+        </div>
+        <div class="product-title">Sling TV</div>
+        <div class="product-desc">
+          Live TV streaming with customizable channel packages.
+        </div>
+        <div class="product-price">12 Months • Contact for price</div>
+        <a href="https://t.me/GustSlAnD" target="_blank" rel="noopener">
+          <button class="buy-btn">Buy Now</button>
+        </a>
+      </div>
+
+      <!-- Criterion Channel -->
+      <div class="product-card">
+        <div class="product-logo-wrapper">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/The_Criterion_Channel_logo.svg/1200px-The_Criterion_Channel_logo.svg.png" 
+               alt="Criterion Channel logo"
+               onerror="this.style.display='none';this.parentNode.style.background='#000000';">
+        </div>
+        <div class="product-title">Criterion Channel</div>
+        <div class="product-desc">
+          Classic and contemporary films from around the world.
+        </div>
+        <div class="product-price">12 Months • Contact for price</div>
+        <a href="https://t.me/GustSlAnD" target="_blank" rel="noopener">
+          <button class="buy-btn">Buy Now</button>
+        </a>
+      </div>
+
+      <!-- Plex TV -->
+      <div class="product-card">
+        <div class="product-logo-wrapper">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Plex_logo.svg/1200px-Plex_logo.svg.png" 
+               alt="Plex TV logo"
+               onerror="this.style.display='none';this.parentNode.style.background='#282a2d';">
+        </div>
+        <div class="product-title">Plex TV</div>
+        <div class="product-desc">
+          Stream free movies and TV shows, plus organize your personal media.
+        </div>
+        <div class="product-price">12 Months • Contact for price</div>
+        <a href="https://t.me/GustSlAnD" target="_blank" rel="noopener">
+          <button class="buy-btn">Buy Now</button>
+        </a>
+      </div>
+
+      <!-- F1TV -->
+      <div class="product-card">
+        <div class="product-logo-wrapper">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/F1_TV_logo.svg/1200px-F1_TV_logo.svg.png" 
+               alt="F1TV logo"
+               onerror="this.style.display='none';this.parentNode.style.background='#e10600';">
+        </div>
+        <div class="product-title">F1TV</div>
+        <div class="product-desc">
+          Live and on-demand Formula 1 races with exclusive content.
+        </div>
+        <div class="product-price">12 Months • Contact for price</div>
+        <a href="https://t.me/GustSlAnD" target="_blank" rel="noopener">
+          <button class="buy-btn">Buy Now</button>
+        </a>
+      </div>
+
+      <!-- Apple TV+ -->
+      <div class="product-card">
+        <div class="product-logo-wrapper">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Apple_TV_plus_logo.svg/1200px-Apple_TV_plus_logo.svg.png" 
+               alt="Apple TV+ logo"
+               onerror="this.style.display='none';this.parentNode.style.background='#000000';">
+        </div>
+        <div class="product-title">Apple TV+</div>
+        <div class="product-desc">
+          Award-winning Apple Originals with cinematic quality.
+        </div>
+        <div class="product-price">12 Months • Contact for price</div>
+        <a href="https://t.me/GustSlAnD" target="_blank" rel="noopener">
+          <button class="buy-btn">Buy Now</button>
+        </a>
+      </div>
+
+      <!-- Steezy -->
+      <div class="product-card">
+        <div class="product-logo-wrapper">
+          <img src="https://www.steezy.co/images/steezy-logo.png" 
+               alt="Steezy logo"
+               onerror="this.style.display='none';this.parentNode.style.background='#000000';">
+        </div>
+        <div class="product-title">Steezy</div>
+        <div class="product-desc">
+          Online dance classes for all skill levels.
+        </div>
+        <div class="product-price">12 Months • Contact for price</div>
+        <a href="https://t.me/GustSlAnD" target="_blank" rel="noopener">
+          <button class="buy-btn">Buy Now</button>
+        </a>
+      </div>
+
+      <!-- Crunchyroll -->
+      <div class="product-card">
+        <div class="product-logo-wrapper">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Crunchyroll_Logo.svg/1200px-Crunchyroll_Logo.svg.png" 
+               alt="Crunchyroll logo"
+               onerror="this.style.display='none';this.parentNode.style.background='#ffe600';">
+        </div>
+        <div class="product-title">Crunchyroll</div>
+        <div class="product-desc">
+          The world's largest anime collection with simulcasts and manga.
+        </div>
+        <div class="product-price">12 Months • Contact for price</div>
+        <a href="https://t.me/GustSlAnD" target="_blank" rel="noopener">
+          <button class="buy-btn">Buy Now</button>
+        </a>
+      </div>
+
+      <!-- Crave -->
+      <div class="product-card">
+        <div class="product-logo-wrapper">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Crave_%28streaming_service%29_logo.svg/1200px-Crave_%28streaming_service%29_logo.svg.png" 
+               alt="Crave logo"
+               onerror="this.style.display='none';this.parentNode.style.background='#000000';">
+        </div>
+        <div class="product-title">Crave</div>
+        <div class="product-desc">
+          Canadian streaming service with HBO, Showtime and more.
+        </div>
+        <div class="product-price">12 Months • Contact for price</div>
+        <a href="https://t.me/GustSlAnD" target="_blank" rel="noopener">
+          <button class="buy-btn">Buy Now</button>
+        </a>
+      </div>
+
+      <!-- fuboTV -->
+      <div class="product-card">
+        <div class="product-logo-wrapper">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/FuboTV_logo.svg/1200px-FuboTV_logo.svg.png" 
+               alt="fuboTV logo"
+               onerror="this.style.display='none';this.parentNode.style.background='#000000';">
+        </div>
+        <div class="product-title">fuboTV</div>
+        <div class="product-desc">
+          Sports-centric live TV streaming with cloud DVR.
+        </div>
+        <div class="product-price">12 Months • Contact for price</div>
+        <a href="https://t.me/GustSlAnD" target="_blank" rel="noopener">
+          <button class="buy-btn">Buy Now</button>
+        </a>
+      </div>
+
+      <!-- Shahid -->
+      <div class="product-card">
+        <div class="product-logo-wrapper">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Shahid_logo.svg/1200px-Shahid_logo.svg.png" 
+               alt="Shahid logo"
+               onerror="this.style.display='none';this.parentNode.style.background='#d81b60';">
+        </div>
+        <div class="product-title">Shahid</div>
+        <div class="product-desc">
+          Leading Arabic streaming platform with exclusive content.
+        </div>
+        <div class="product-price">12 Months • Contact for price</div>
+        <a href="https://t.me/GustSlAnD" target="_blank" rel="noopener">
+          <button class="buy-btn">Buy Now</button>
+        </a>
+      </div>
+
+      <!-- Hulu -->
+      <div class="product-card">
+        <div class="product-logo-wrapper">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Hulu_Logo.svg/1200px-Hulu_Logo.svg.png" 
+               alt="Hulu logo"
+               onerror="this.style.display='none';this.parentNode.style.background='#1ce783';">
+        </div>
+        <div class="product-title">Hulu</div>
+        <div class="product-desc">
+          Next-day TV episodes, films, and originals for every interest.
+        </div>
+        <div class="product-price">12 Months • Contact for price</div>
+        <a href="https://t.me/GustSlAnD" target="_blank" rel="noopener">
+          <button class="buy-btn">Buy Now</button>
+        </a>
+      </div>
+
+      <!-- NBA League Pass -->
+      <div class="product-card">
+        <div class="product-logo-wrapper">
+          <img src="https://upload.wikimedia.org/wikipedia/en/thumb/0/03/NBA_League_Pass_logo.svg/1200px-NBA_League_Pass_logo.svg.png" 
+               alt="NBA League Pass logo"
+               onerror="this.style.display='none';this.parentNode.style.background='#253b73';">
+        </div>
+        <div class="product-title">NBA League Pass</div>
+        <div class="product-desc">
+          Watch every NBA game live and on demand.
+        </div>
+        <div class="product-price">12 Months • Contact for price</div>
+        <a href="https://t.me/GustSlAnD" target="_blank" rel="noopener">
+          <button class="buy-btn">Buy Now</button>
+        </a>
+      </div>
+
+      <!-- Vidgo -->
+      <div class="product-card">
+        <div class="product-logo-wrapper">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Vidgo_logo.svg/1200px-Vidgo_logo.svg.png" 
+               alt="Vidgo logo"
+               onerror="this.style.display='none';this.parentNode.style.background='#000000';">
+        </div>
+        <div class="product-title">Vidgo</div>
+        <div class="product-desc">
+          Live TV streaming with sports and entertainment channels.
+        </div>
+        <div class="product-price">12 Months • Contact for price</div>
+        <a href="https://t.me/GustSlAnD" target="_blank" rel="noopener">
+          <button class="buy-btn">Buy Now</button>
+        </a>
+      </div>
+
+      <!-- DAZN -->
+      <div class="product-card">
+        <div class="product-logo-wrapper">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/DAZN_logo.svg/1200px-DAZN_logo.svg.png" 
+               alt="DAZN logo"
+               onerror="this.style.display='none';this.parentNode.style.background='#000000';">
+        </div>
+        <div class="product-title">DAZN</div>
+        <div class="product-desc">
+          Live sports streaming including boxing, MMA, and football.
+        </div>
+        <div class="product-price">12 Months • Contact for price</div>
+        <a href="https://t.me/GustSlAnD" target="_blank" rel="noopener">
+          <button class="buy-btn">Buy Now</button>
+        </a>
+      </div>
+
+      <!-- BEIN SPORT -->
+      <div class="product-card">
+        <div class="product-logo-wrapper">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Bein_Sports_logo.svg/1200px-Bein_Sports_logo.svg.png" 
+               alt="BEIN SPORT logo"
+               onerror="this.style.display='none';this.parentNode.style.background='#bb0a30';">
+        </div>
+        <div class="product-title">BEIN SPORT</div>
+        <div class="product-desc">
+          International sports coverage including football and tennis.
+        </div>
+        <div class="product-price">12 Months • Contact for price</div>
+        <a href="https://t.me/GustSlAnD" target="_blank" rel="noopener">
+          <button class="buy-btn">Buy Now</button>
+        </a>
+      </div>
+
+      <!-- Fanatiz -->
+      <div class="product-card">
+        <div class="product-logo-wrapper">
+          <img src="https://fanatiz.com/wp-content/uploads/2020/04/logo-fanatiz.png" 
+               alt="Fanatiz logo"
+               onerror="this.style.display='none';this.parentNode.style.background='#000000';">
+        </div>
+        <div class="product-title">Fanatiz</div>
+        <div class="product-desc">
+          Soccer streaming service with leagues from around the world.
+        </div>
+        <div class="product-price">12 Months • Contact for price</div>
+        <a href="https://t.me/GustSlAnD" target="_blank" rel="noopener">
+          <button class="buy-btn">Buy Now</button>
+        </a>
+      </div>
+
+      <!-- Acorn TV -->
+      <div class="product-card">
+        <div class="product-logo-wrapper">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Acorn_TV_logo.svg/1200px-Acorn_TV_logo.svg.png" 
+               alt="Acorn TV logo"
+               onerror="this.style.display='none';this.parentNode.style.background='#000000';">
+        </div>
+        <div class="product-title">Acorn TV</div>
+        <div class="product-desc">
+          British and international mystery, drama, and comedy.
+        </div>
+        <div class="product-price">12 Months • Contact for price</div>
+        <a href="https://t.me/GustSlAnD" target="_blank" rel="noopener">
+          <button class="buy-btn">Buy Now</button>
+        </a>
+      </div>
+
+      <!-- Paramount+ -->
+      <div class="product-card">
+        <div class="product-logo-wrapper">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Paramount_Plus.svg/1200px-Paramount_Plus.svg.png" 
+               alt="Paramount+ logo"
+               onerror="this.style.display='none';this.parentNode.style.background='#0066ff';">
+        </div>
+        <div class="product-title">Paramount+</div>
+        <div class="product-desc">
+          Blockbuster movies, exclusive originals, and live sports.
+        </div>
+        <div class="product-price">12 Months • Contact for price</div>
+        <a href="https://t.me/GustSlAnD" target="_blank" rel="noopener">
+          <button class="buy-btn">Buy Now</button>
+        </a>
+      </div>
+
+      <!-- APPLE ONE -->
+      <div class="product-card">
+        <div class="product-logo-wrapper">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Apple_one_logo.svg/1200px-Apple_one_logo.svg.png" 
+               alt="APPLE ONE logo"
+               onerror="this.style.display='none';this.parentNode.style.background='#000000';">
+        </div>
+        <div class="product-title">APPLE ONE</div>
+        <div class="product-desc">
+          Bundle of Apple services including TV+, Music, and iCloud.
+        </div>
+        <div class="product-price">12 Months • Contact for price</div>
+        <a href="https://t.me/GustSlAnD" target="_blank" rel="noopener">
+          <button class="buy-btn">Buy Now</button>
+        </a>
+      </div>
+
+      <!-- Peacock -->
+      <div class="product-card">
+        <div class="product-logo-wrapper">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/NBCUniversal_Peacock_Logo.svg/1200px-NBCUniversal_Peacock_Logo.svg.png" 
+               alt="Peacock logo"
+               onerror="this.style.display='none';this.parentNode.style.background='#000000';">
+        </div>
+        <div class="product-title">Peacock</div>
+        <div class="product-desc">
+          NBCUniversal's streaming service with TV shows, movies, and sports.
+        </div>
+        <div class="product-price">12 Months • Contact for price</div>
+        <a href="https://t.me/GustSlAnD" target="_blank" rel="noopener">
+          <button class="buy-btn">Buy Now</button>
+        </a>
+      </div>
+
+      <!-- Guide Doc -->
+      <div class="product-card">
+        <div class="product-logo-wrapper">
+          <img src="https://guidedoc.tv/images/guidedoc-logo.png" 
+               alt="Guide Doc logo"
+               onerror="this.style.display='none';this.parentNode.style.background='#000000';">
+        </div>
+        <div class="product-title">Guide Doc</div>
+        <div class="product-desc">
+          Curated collection of documentary films from around the world.
+        </div>
+        <div class="product-price">12 Months • Contact for price</div>
+        <a href="https://t.me/GustSlAnD" target="_blank" rel="noopener">
+          <button class="buy-btn">Buy Now</button>
+        </a>
+      </div>
+
+      <!-- YouTube -->
+      <div class="product-card">
+        <div class="product-logo-wrapper">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/YouTube_full-color_icon_%282017%29.svg/1200px-YouTube_full-color_icon_%282017%29.svg.png" 
+               alt="YouTube logo"
+               onerror="this.style.display='none';this.parentNode.style.background='#ff0000';">
+        </div>
+        <div class="product-title">YouTube</div>
+        <div class="product-desc">
+          Ad-free videos, background play, and YouTube Originals.
+        </div>
+        <div class="product-price">12 Months • Contact for price</div>
+        <a href="https://t.me/GustSlAnD" target="_blank" rel="noopener">
+          <button class="buy-btn">Buy Now</button>
+        </a>
+      </div>
+
+      <!-- ESPN -->
+      <div class="product-card">
+        <div class="product-logo-wrapper">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/1200px-ESPN_wordmark.svg.png" 
+               alt="ESPN logo"
+               onerror="this.style.display='none';this.parentNode.style.background='#000000';">
+        </div>
+        <div class="product-title">ESPN</div>
+        <div class="product-desc">
+          Live sports, original shows, and ESPN+ exclusive content.
+        </div>
+        <div class="product-price">12 Months • Contact for price</div>
+        <a href="https://t.me/GustSlAnD" target="_blank" rel="noopener">
+          <button class="buy-btn">Buy Now</button>
+        </a>
+      </div>
+
+      <!-- Volleyball World TV -->
+      <div class="product-card">
+        <div class="product-logo-wrapper">
+          <img src="https://www.volleyballworld.com/static/images/vw/vw-logo-white.svg" 
+               alt="Volleyball World TV logo"
+               onerror="this.style.display='none';this.parentNode.style.background='#000000';">
+        </div>
+        <div class="product-title">Volleyball World TV</div>
+        <div class="product-desc">
+          Live and on-demand volleyball matches from around the world.
+        </div>
+        <div class="product-price">12 Months • Contact for price</div>
+        <a href="https://t.me/GustSlAnD" target="_blank" rel="noopener">
+          <button class="buy-btn">Buy Now</button>
+        </a>
+      </div>
+
+      <!-- Gaia -->
+      <div class="product-card">
+        <div class="product-logo-wrapper">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Gaia_%28streaming_service%29_logo.svg/1200px-Gaia_%28streaming_service%29_logo.svg.png" 
+               alt="Gaia logo"
+               onerror="this.style.display='none';this.parentNode.style.background='#000000';">
+        </div>
+        <div class="product-title">Gaia</div>
+        <div class="product-desc">
+          Conscious media with yoga, meditation, and spiritual growth.
+        </div>
+        <div class="product-price">12 Months • Contact for price</div>
+        <a href="https://t.me/GustSlAnD" target="_blank" rel="noopener">
+          <button class="buy-btn">Buy Now</button>
+        </a>
+      </div>
+
+      <!-- Lionsgate+ -->
+      <div class="product-card">
+        <div class="product-logo-wrapper">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Lionsgate%2B_logo.svg/1200px-Lionsgate%2B_logo.svg.png" 
+               alt="Lionsgate+ logo"
+               onerror="this.style.display='none';this.parentNode.style.background='#000000';">
+        </div>
+        <div class="product-title">Lionsgate+</div>
+        <div class="product-desc">
+          Movies and TV shows from Lionsgate's premium catalog.
+        </div>
+        <div class="product-price">12 Months • Contact for price</div>
+        <a href="https://t.me/GustSlAnD" target="_blank" rel="noopener">
+          <button class="buy-btn">Buy Now</button>
+        </a>
+      </div>
+
+      <!-- Discovery+ -->
+      <div class="product-card">
+        <div class="product-logo-wrapper">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Discovery%2B_logo.svg/1200px-Discovery%2B_logo.svg.png" 
+               alt="Discovery+ logo"
+               onerror="this.style.display='none';this.parentNode.style.background='#000000';">
+        </div>
+        <div class="product-title">Discovery+</div>
+        <div class="product-desc">
+          Reality TV, documentaries, and shows from Discovery networks.
+        </div>
+        <div class="product-price">12 Months • Contact for price</div>
+        <a href="https://t.me/GustSlAnD" target="_blank" rel="noopener">
+          <button class="buy-btn">Buy Now</button>
+        </a>
+      </div>
+
+    </div>
+  </section>
+  <section class="telegram-section">
+    <h3>Contact & Purchase via Telegram</h3>
+    <p>
+      Have a question or want to order? Chat with <b>@GustSlAnD</b> now for instant support and fast secure purchase.
+    </p>
+    <a class="telegram-link" href="https://t.me/GustSlAnD" target="_blank" rel="noopener">
+      <i class="fab fa-telegram-plane"></i> @GustSlAnD
+    </a>
+  </section>
+  <footer>
+    &copy; 2024 slandx store. All rights reserved.
+  </footer>
+</body>
+</html>
